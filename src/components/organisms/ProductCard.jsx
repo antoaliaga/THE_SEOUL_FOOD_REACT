@@ -1,18 +1,16 @@
 import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Image from '../atoms/Image';
-import Button from '../atoms/Button';
 import CardBody from '../molecules/CardBody';
-import { useCart } from '../../context/CartContext';
+import QuantityControl from '../molecules/QuantityControl';
 
 function ProductCard({ product }) {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
 
   const goToDetail = () => navigate(`/products/${product.id}`);
 
   return (
-    <Card style={{ width: '18rem' }} className="m-2">
+    <Card className="product-card">
       <div
         className="card-img-link"
         role="link"
@@ -26,17 +24,13 @@ function ProductCard({ product }) {
           }
         }}
       >
-        <Image src={product.image} alt={product.name} className="card-img-top" />
+        <Image src={product.image} alt={product.name} className="card-img-top product-img" />
       </div>
-      <Card.Body className="text-center">
+      <Card.Body className="text-center d-flex flex-column">
         <CardBody title={product.name} price={product.price} />
-        <Button
-          variant="success"
-          disabled={product.stock === 0}
-          onClick={() => addToCart(product.id)}
-        >
-          {product.stock === 0 ? 'Sin stock' : 'Agregar'}
-        </Button>
+        <div className="mt-auto">
+          <QuantityControl product={product} />
+        </div>
       </Card.Body>
     </Card>
   );

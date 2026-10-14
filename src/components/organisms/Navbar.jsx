@@ -17,6 +17,14 @@ function NavBar() {
             <Image src="/imagenes/store-front.png" alt="Logo The Seoul Food" className="logo-nav me-2" />
             The Seoul Food
           </Navbar.Brand>
+          <Button
+            variant="outline-light"
+            className="order-lg-last ms-auto ms-lg-2 me-2 me-lg-0"
+            onClick={openCart}
+            aria-label="Abrir carrito"
+          >
+            🛒 <Badge bg="danger">{totalItems}</Badge>
+          </Button>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -27,9 +35,6 @@ function NavBar() {
             <Nav className="me-lg-2">
               <AccountMenu />
             </Nav>
-            <Button variant="outline-light" onClick={openCart}>
-              🛒 <Badge bg="danger">{totalItems}</Badge>
-            </Button>
           </Navbar.Collapse>
         </Container>
       </Navbar>

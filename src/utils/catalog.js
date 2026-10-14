@@ -12,6 +12,11 @@ function read(key, fallback) {
   }
 }
 
+// Evita stock negativo, decimal o vacío
+function cleanStock(value) {
+  return Math.max(0, Math.floor(Number(value)) || 0);
+}
+
 function write(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
@@ -35,14 +40,14 @@ export function createProduct({ name, image, price, description, stock }) {
     image,
     price: Number(price),
     description,
-    stock: Number(stock),
+    stock: cleanStock(stock),
   };
   write(ADDED_KEY, [...read(ADDED_KEY, []), product]);
   return product;
 }
 
 export function saveEdit(id, price, stock) {
-  const values = { price: Number(price), stock: Number(stock) };
+  const values = { price: Number(price), stock: cleanStock(stock) };
   if (String(id).startsWith('ADM-')) {
     write(
       ADDED_KEY,
